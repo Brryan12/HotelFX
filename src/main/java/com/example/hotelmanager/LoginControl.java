@@ -3,6 +3,12 @@ package com.example.hotelmanager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
+
 
 public class LoginControl {
     @FXML
@@ -11,14 +17,33 @@ public class LoginControl {
 
     @FXML
     protected void funcionLogin() {
-        String user = "admin";
-        String pwd = "1234";
+        String user = txtUser.getText();
+        String pwd = pwdPassword.getText();
 
-        if (true) { //datos corretos
-            //login
-            //pantalla principal
+        if (user.equals("admin") && pwd.equals("1234")) { //datos corretos
+            //Caso exito
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("com.example.hotelmanager/Login-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) txtUser.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Pantalla de Inicio");
+            }
+            catch(Exception error){
+                //error sistema
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error de Sistema");
+                alert.setHeaderText(/*Traza del error o el codigo del error*/);
+                alert.setContentText(error.getMessage());
+                alert.showAndWait(); //solo un boton y espera por input para salir
+            }
         } else {
             //error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Error al Iniciar Sesion. Usuario o contraseña incorrectos");
+            alert.showAndWait(); //solo un boton y espera por input para salir
         }
     }
 }
