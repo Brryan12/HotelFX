@@ -23,7 +23,8 @@ public class LoginControl {
         if (user.equals("admin") && pwd.equals("1234")) { //datos corretos
             //Caso exito
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("com.example.hotelmanager/Login-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource
+                        ("com.example.hotelmanager/Login-view.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) txtUser.getScene().getWindow();
                 stage.setScene(new Scene(root));
@@ -33,8 +34,9 @@ public class LoginControl {
                 //error sistema
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error de Sistema");
-                alert.setHeaderText(/*Traza del error o el codigo del error*/);
-                alert.setContentText(error.getMessage());
+                alert.setHeaderText(null/*Traza del error o el codigo del error*/);
+                alert.setContentText("Ocurrio un error inesperado del sistema. Intente de nuevo más tarde." +
+                        "Como referencia, el detalla del error es: " + error.getMessage());
                 alert.showAndWait(); //solo un boton y espera por input para salir
             }
         } else {
