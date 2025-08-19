@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
 
 
-public class LoginControl {
+public class LoginController {
     @FXML
     private TextField txtUser;
     @FXML
@@ -42,7 +42,7 @@ public class LoginControl {
                     //Caso exito
                     try{
                         FXMLLoader loader = new FXMLLoader(getClass().getResource
-                                ("com.example.hotelmanager/Login-view.fxml"));
+                                ("com.example.hotelmanager/inicio-view.fxml"));
                         Parent root = loader.load();
                         Stage stage = (Stage) txtUser.getScene().getWindow();
                         stage.setScene(new Scene(root));
