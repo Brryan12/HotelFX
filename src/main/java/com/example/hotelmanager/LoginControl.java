@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 public class LoginControl {
     @FXML
     private TextField txtUser;
+    @FXML
     private PasswordField pwdPassword;
 
     @FXML
@@ -34,7 +35,7 @@ public class LoginControl {
                 //error sistema
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error de Sistema");
-                alert.setHeaderText(null/*Traza del error o el codigo del error*/);
+                alert.setHeaderText(error.getStackTrace()[0].getMethodName());
                 alert.setContentText("Ocurrio un error inesperado del sistema. Intente de nuevo más tarde." +
                         "Como referencia, el detalla del error es: " + error.getMessage());
                 alert.showAndWait(); //solo un boton y espera por input para salir
