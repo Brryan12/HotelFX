@@ -1,5 +1,7 @@
 package Backend;
 
+import com.example.hotelmanager.Cliente;
+
 import java.time.LocalDate;
 
 public class Reservacion {
