@@ -134,7 +134,7 @@ public class InicioController implements Initializable{
                 return;
             } else {
                 ObservableList<Cliente> listaFiltrada = FXCollections.observableArrayList(
-                        listaClientes.stream()
+                        (Cliente) listaClientes.stream()
                                 .filter(cliente -> cliente.getIdentificacion().toLowerCase().contains(criterio)
                                         || cliente.getNombre().toLowerCase().contains(criterio)
                                 || cliente.getPrimerApellido().toLowerCase().contains(criterio)));
