@@ -29,9 +29,9 @@
             <PasswordField id="pwdPassword" fx:id="pwdPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button id="btnLogin" fx:id="btnLogin" layoutX="350.0" layoutY="216.0" mnemonicParsing="false" onAction="#funcionLogin" text="Iniciar sesion" textFill="#4ac95d">
+      <Button id="btnLogin" fx:id="btnLogin" layoutX="342.0" layoutY="215.0" mnemonicParsing="false" onAction="#funcionLogin" text="Iniciar sesion" textFill="#19992a">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
       </Button>
       <Label id="lblLogin" layoutX="220.0" layoutY="42.0" text="Login">
@@ -42,7 +42,7 @@
       <Label id="lblLogin" contentDisplay="CENTER" layoutX="45.0" layoutY="68.0" prefHeight="33.0" prefWidth="395.0" text="Use su user y contraseña para este sistema. Con esto podra iniciar sesion" />
       <Button id="btnSalir" layoutX="242.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Salir" textFill="RED">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
       </Button>
       <ProgressIndicator id="progress" fx:id="progress" layoutX="378.0" layoutY="212.0" prefHeight="33.0" prefWidth="57.0" progress="0.0" visible="false" />

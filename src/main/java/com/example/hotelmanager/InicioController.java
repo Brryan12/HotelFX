@@ -1,13 +1,19 @@
 package com.example.hotelmanager;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,52 +46,104 @@ public class InicioController implements Initializable{
         tblClientes.setItems(listaClientes);
     }
     @FXML private void agregarCliente(){
-        String identificacion = null; //txtIdentificacionCliente.getText().trim();
-        String nombre = null; //txtNombreCliente.getText().trim();
-        String primerApellido = null; //txtPrimerApellidoCliente.getText().trim();
-        LocalDate fechaNacimiento = null; //dtpFechaNacimientoCliente.getValue();
-
-        if(identificacion.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || fechaNacimiento == null) {
-            mostrarAlerta("Error de validación", "Todos los campos son obligatorios.");
-            return; //salir del metodo
-        }
-
-        //validar cedula
-        for(Cliente cliente : listaClientes){
-            if(cliente.getIdentificacion().equals(identificacion)){
-                mostrarAlerta("Error de validación", "Ya existe un cliente con esa identificación.");
-                return; //salir del metodo
+        Cliente nuevo = mostrarFormularioCliente(null, false);
+        if(nuevo != null){
+            nuevo.setId(listaClientes.getLast().getId()+1);
+            //validar cedula
+            for (Cliente cliente : listaClientes) {
+                if (cliente.getIdentificacion().equals(nuevo.getIdentificacion())) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error de Validación");
+                    alert.setHeaderText("Identificación Duplicada");
+                    alert.setContentText("Ya existe un cliente con la identificación."+nuevo.getIdentificacion());
+                    alert.showAndWait();
+                    return; //salir del metodo
+                }
             }
+            listaClientes.add(nuevo);
+            tblClientes.refresh();
+            mostrarAlerta("Cliente agregado", "El cliente ha sido agregado correctamente.");
         }
+    }
 
-        //valir fecha de nacimiento con un try catch
-//        listaClientes.add(new Cliente(nombre, listaClientes.getLast().getId() + 1, fechaNacimiento, primerApellido, identificacion));
-//        limpiarCampos(); //limpiar campos de texto
-//        tblClientes.refresh(); //actualizar tabla
-//        mostrarAlerta("Cliente agregado", "El cliente ha sido agregado correctamente.");
+    private Cliente mostrarFormularioCliente(Cliente cliente, boolean editar){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource
+                    ("/formulario-cliente-view.fxml"));
+            Parent root = loader.load();
+            FormularioCliController controller = loader.getController();
+            controller.setCliente(cliente, editar);
+
+            Stage stage = new Stage();
+            stage.setTitle(editar ? "Modificar Cliente" : "Agregar Cliente");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            return (Cliente) stage.getUserData();
+        }
+        catch(IOException error){
+            //error sistema
+            mostrarAlerta("Eror al abrir formulario", error.getMessage());
+            return  null;
+        }
     }
 
     @FXML private void modificarCliente(){
+
         Cliente seleccionado = tblClientes.getSelectionModel().getSelectedItem();
         if(seleccionado == null){
             mostrarAlerta("Error de selección", "Debe seleccionar un cliente para modificar.");
             return; //salir del metodo
         }
-        String nombre = null; //txtNombreCliente.getText().trim();
-        String primerApellido = null; //txtPrimerApellidoCliente.getText().trim();
-        LocalDate fechaNacimiento = null; //dtpFechaNacimientoCliente.getValue();
 
-        if(nombre.isEmpty() || primerApellido.isEmpty() || fechaNacimiento == null) {
-            mostrarAlerta("Error de validación", "Todos los campos son obligatorios.");
-            return; //salir del metodo
+        Cliente cliente = mostrarFormularioCliente(seleccionado, true);
+        if(cliente == null){
+            tblClientes.refresh();
         }
+    }
 
-        seleccionado.setNombre(nombre);
-        seleccionado.setPrimerApellido(primerApellido);
-        seleccionado.setFechaNacimiento(fechaNacimiento);
-        tblClientes.refresh(); //actualizar tabla
-        mostrarAlerta("Cliente modificado", "El cliente ha sido modificado correctamente.");
+    @FXML private void eliminarCliente(){
+        try {
+            Cliente seleccionado = tblClientes.getSelectionModel().getSelectedItem();
+            if (seleccionado == null) {
+                mostrarAlerta("Error de selección", "Debe seleccionar un cliente para eliminar.");
+                return; //salir del metodo
+            }
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirmar Eliminación");
+            confirm.setHeaderText(null);
+            confirm.setContentText("¿Está seguro de que desea eliminar al cliente: " + seleccionado.getNombre()+
+                    "Identificacion" + seleccionado.getIdentificacion()+ "?");
 
+            if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                listaClientes.remove(seleccionado);
+                tblClientes.refresh();
+                mostrarAlerta("Cliente eliminado", "El cliente ha sido eliminado correctamente.");
+            }
+        }catch (Exception error){
+            mostrarAlerta("Error al eliminar cliente", error.getMessage());
+        }
+    }
+
+    @FXML private void buscarCliente(){
+        try {
+            String criterio = txtBuscarCli.getText().trim().toLowerCase();
+            if (criterio.isEmpty()) {
+                tblClientes.setItems(listaClientes);
+                return;
+            } else {
+                ObservableList<Cliente> listaFiltrada = FXCollections.observableArrayList(
+                        listaClientes.stream()
+                                .filter(cliente -> cliente.getIdentificacion().toLowerCase().contains(criterio)
+                                        || cliente.getNombre().toLowerCase().contains(criterio)
+                                || cliente.getPrimerApellido().toLowerCase().contains(criterio)));
+                tblClientes.setItems(listaFiltrada);
+            }
+            tblClientes.refresh();
+        }catch (Exception error){
+            mostrarAlerta("Error en la búsqueda", error.getMessage());
+        }
     }
     private void mostrarAlerta(String titulo, String mensaje) {;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -95,10 +153,4 @@ public class InicioController implements Initializable{
         alert.showAndWait();
     }
 
-    private void limpiarCampos() {
-        //txtIdentificacionCliente.clear();
-        //txtNombreCliente.clear();
-        //txtPrimerApellidoCliente.clear();
-        //dtpFechaNacimientoCliente.setValue(null);
-    }
 }

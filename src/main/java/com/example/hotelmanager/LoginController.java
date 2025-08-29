@@ -42,7 +42,7 @@ public class LoginController {
                     //Caso exito
                     try{
                         FXMLLoader loader = new FXMLLoader(getClass().getResource
-                                ("com.example.hotelmanager/inicio-view.fxml"));
+                                ("/com/example/hotelmanager/inicio-view.fxml"));
                         Parent root = loader.load();
                         Stage stage = (Stage) txtUser.getScene().getWindow();
                         stage.setScene(new Scene(root));
