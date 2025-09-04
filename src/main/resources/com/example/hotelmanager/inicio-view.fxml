@@ -26,11 +26,11 @@
                                     <TableColumn id="colNombreCli" fx:id="colNombreCli" prefWidth="149.0" text="Nombre" />
                                  </columns>
                               </TableView>
-                              <Button id="btnModificarCli" fx:id="btnModificarCli" layoutX="434.0" layoutY="132.0" mnemonicParsing="false" text="Modificar" />
+                              <Button id="btnModificarCli" fx:id="btnModificarCli" layoutX="434.0" layoutY="132.0" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar" />
                               <Button id="btnAgregarCli" fx:id="btnAgregarCli" layoutX="434.0" layoutY="83.0" mnemonicParsing="false" onAction="#agregarCliente" prefHeight="25.0" prefWidth="67.0" text="Agregar" />
-                              <Button id="btnEliminarCli" fx:id="btnEliminarCli" layoutX="433.0" layoutY="181.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="68.0" text="Eliminar" />
+                              <Button id="btnEliminarCli" fx:id="btnEliminarCli" layoutX="433.0" layoutY="181.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="22.0" prefWidth="68.0" text="Eliminar" />
                               <TextField id="txtBuscarCli" fx:id="txtBuscarCli" layoutX="14.0" layoutY="14.0" prefHeight="19.0" prefWidth="246.0" />
-                              <Button id="btnBuscarCli" fx:id="btnBuscarCli" layoutX="282.0" layoutY="14.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="68.0" text="Buscar" />
+                              <Button id="btnBuscarCli" fx:id="btnBuscarCli" layoutX="282.0" layoutY="14.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="22.0" prefWidth="68.0" text="Buscar" />
                            </children>
                         </Pane>
                      </children>

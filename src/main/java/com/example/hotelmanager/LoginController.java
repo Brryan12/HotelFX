@@ -17,53 +17,53 @@ public class LoginController {
     @FXML
     private Button btnLogin;
     @FXML
+    private Button btnSalir;
+    @FXML
     private ProgressIndicator progress; //poner id en properties and Code
 
     @FXML
-    protected void funcionLogin() {
-        String user = txtUser.getText();
-        String pwd = pwdPassword.getText();
-        btnLogin.setDisable(false);
+    private void funcionLogin() {
+        String usuario = txtUser.getText();
+        String contrasena = pwdPassword.getText();
+
+        // Mostrar progress y ocultar botón
+        btnLogin.setVisible(false);
+        btnSalir.setVisible(false);
         progress.setVisible(true);
 
+        // Simular un pequeño retardo como si validara contra un servidor
         new Thread(() -> {
             try {
-                Thread.sleep(1500); //espera
-            }
-            catch (InterruptedException e) {
+                Thread.sleep(1500); // Simula procesamiento
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             Platform.runLater(() -> {
+                // Ocultar el progress y restaurar botón
                 progress.setVisible(false);
-                btnLogin.setDisable(true);
-
-                if (user.equals("admin") && pwd.equals("1234")) { //datos corretos
-                    //Caso exito
-                    try{
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource
-                                ("/com/example/hotelmanager/inicio-view.fxml"));
+                btnLogin.setVisible(true);
+                btnSalir.setVisible(true);
+                if (usuario.equals("admin") && contrasena.equals("1234")) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("inicio-view.fxml"));
                         Parent root = loader.load();
                         Stage stage = (Stage) txtUser.getScene().getWindow();
                         stage.setScene(new Scene(root));
                         stage.setTitle("Pantalla de Inicio");
-                    }
-                    catch(Exception error){
-                        //error sistema
+                    } catch (Exception e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error de Sistema");
-                        alert.setHeaderText(error.getStackTrace()[0].getMethodName());
-                        alert.setContentText("Ocurrio un error inesperado del sistema. Intente de nuevo más tarde." +
-                                "Como referencia, el detalla del error es: " + error.getMessage());
-                        alert.showAndWait(); //solo un boton y espera por input para salir
+                        alert.setTitle("Error de sistema");
+                        alert.setHeaderText(e.getStackTrace()[0].getClassName());
+                        alert.setContentText("No fue posible iniciar sesión, debido a un error de sistema: " + e.getMessage());
+                        alert.showAndWait();
                     }
                 } else {
-                    //error
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
+                    alert.setTitle("Error de autenticación");
                     alert.setHeaderText(null);
-                    alert.setContentText("Error al Iniciar Sesion. Usuario o contraseña incorrectos");
-                    alert.showAndWait(); //solo un boton y espera por input para salir
+                    alert.setContentText("Usuario o contraseña incorrectos.");
+                    alert.showAndWait();
                 }
             });
         }).start();

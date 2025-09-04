@@ -1,91 +1,109 @@
 package com.example.hotelmanager;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import com.example.hotelmanager.Cliente;
+
 import java.time.LocalDate;
+
 public class FormularioCliController {
 
-    @FXML private TextField txtNombreCli;
-    @FXML private TextField txtApellidoCli;
-    @FXML private TextField txtIdentificacionCli;
-    @FXML private DatePicker dtpFechaNacCli;
+    // Controllers del formulario
+    @FXML private TextField txtIdentificacionCliente;
+    @FXML private TextField txtNombreCliente;
+    @FXML private TextField txtPrimerApellidoCliente;
+    @FXML private DatePicker dtpFechaNacimientoCliente;
 
     private Cliente cliente;
-    private boolean editar = false;
+    private boolean modoEdicion = false;
 
-    public void setCliente(Cliente cliente, boolean editar){
+    public void setCliente(Cliente cliente, boolean editar) {
+        //Si el cliente es nuevo, es decir, si venimos de un "Agregar Cliente"
+        //Entonces solo seteamos el cliente nuevo que vamos a guardar
+        //Y el modo edición se mantiene en falso
         this.cliente = cliente;
-        this.editar = editar;
-        //editar true, cliente existe, modificar info
-        if(editar && cliente != null){
-            txtNombreCli.setText(cliente.getNombre());
-            txtApellidoCli.setText(cliente.getPrimerApellido());
-            txtIdentificacionCli.setText(cliente.getIdentificacion());
-            dtpFechaNacCli.setValue(cliente.getFechaNacimiento());
+        this.modoEdicion = editar;
+
+        //Si el cliente no es nuevo, es decir, venimos de un "Modificar Cliente"
+        //Entonces modificamos los datos y los guardamos en el cliente ya existente
+        //Para esto, en la pantalla del formulario debemos cargar los datos que estaban
+        //previamente guardados
+        if(editar && cliente != null) {
+            txtIdentificacionCliente.setText(cliente.getIdentificacion());
+            txtNombreCliente.setText(cliente.getNombre());
+            txtPrimerApellidoCliente.setText(cliente.getPrimerApellido());
+            dtpFechaNacimientoCliente.setValue(cliente.getFechaNacimiento());
         }
     }
 
-    @FXML private void guardarCliente(){
+    @FXML
+    private void guardarCliente()
+    {
         try {
-            String nombre = txtNombreCli.getText();
-            String apellido = txtApellidoCli.getText();
-            String identificacion = txtIdentificacionCli.getText();
-            LocalDate fechaNac = dtpFechaNacCli.getValue();
+            String identificacion = txtIdentificacionCliente.getText().trim();
+            String nombre = txtNombreCliente.getText().trim();
+            String primerApellido = txtPrimerApellidoCliente.getText().trim();
+            LocalDate fechaNacimiento = dtpFechaNacimientoCliente.getValue();
 
-            if (nombre.isEmpty() || apellido.isEmpty() || identificacion.isEmpty() || fechaNac == null) {
-                //mostrar error
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error de Validación");
-                alert.setHeaderText("Dates Incompletos");
-                alert.setContentText("Por favor, complete todos los campos antes de guardar.");
-                alert.showAndWait();
+            // Verificamos que el formulario este completo
+            if (identificacion.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || fechaNacimiento == null) {
+                // Se va a lanzar un error (alert)
+                mostrarAlerta("Campos incompletos", "Por favor, complete todos los campos del formulario.");
                 return;
             }
 
-            if (editar && cliente != null) {
-                //modificar cliente existente
-                cliente.setNombre(nombre);
-                cliente.setPrimerApellido(apellido);
-                cliente.setIdentificacion(identificacion);
-                cliente.setFechaNacimiento(fechaNac);
+            //Vamos a verificar si es un cliente nuevo o si estamos editando un cliente ya existente
+            if (!modoEdicion) {
+                //Entonces es un cliente nuevo
+                cliente = new Cliente(nombre, 0, fechaNacimiento, primerApellido, identificacion);
             } else {
-                //crear nuevo cliente
-                cliente = new Cliente(nombre, 0, fechaNac, apellido, identificacion);
+                //Entonces estamos modificando un cliente existente
+                cliente.setIdentificacion(identificacion);
+                cliente.setNombre(nombre);
+                cliente.setPrimerApellido(primerApellido);
+                cliente.setFechaNacimiento(fechaNacimiento);
             }
-            //cerrar ventana y regresar a la principal
 
-            Stage stage = (Stage) txtNombreCli.getScene().getWindow();
+            //Aquí vamos a controlar el movimiento de las ventanas
+            //Se debe cerrar la ventana del formulario y se debe regresar a la principal
+            Stage stage = (Stage) txtNombreCliente.getScene().getWindow();
             stage.setUserData(cliente);
             stage.close();
-        }catch(Exception error){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de Sistema");
-            alert.setHeaderText(error.getStackTrace()[0].getMethodName());
-            alert.setContentText("Error al guardar los datos" + error.getMessage());
-            alert.showAndWait(); //solo un boton y espera por input para salir
+        }
+        catch (Exception error) {
+            mostrarAlerta("Error al guardar los datos", error.getMessage());
         }
     }
 
-    private void cancelarCliente(){
-        try {
-            Stage stage = (Stage) txtNombreCli.getScene().getWindow();
+    @FXML
+    private void cancelarCliente()
+    {
+        try
+        {
+            Stage stage = (Stage) txtNombreCliente.getScene().getWindow();
             stage.setUserData(null);
             stage.close();
-        }catch (Exception error){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de Sistema");
-            alert.setHeaderText(error.getStackTrace()[0].getMethodName());
-            alert.setContentText("Error al guardar los datos" + error.getMessage());
-            alert.showAndWait(); //solo un boton y espera por input para salir
+        }
+        catch (Exception error) {
+            mostrarAlerta("Error al guardar los datos", error.getMessage());
         }
     }
-    private void LimpiarCampos() {
-        txtNombreCli.clear();
-        txtApellidoCli.clear();
-        txtIdentificacionCli.clear();
-        dtpFechaNacCli.setValue(null);
+
+    private void limpiarCampos() {
+        txtIdentificacionCliente.clear();
+        txtNombreCliente.clear();
+        txtPrimerApellidoCliente.clear();
+        dtpFechaNacimientoCliente.setValue(null);
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
