@@ -1,4 +1,4 @@
-package Backend;
+package com.example.hotelmanager.domain.entity;
 
 public class Habitacion {
     private int id; //tag interno

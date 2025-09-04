@@ -1,6 +1,4 @@
-package Backend;
-
-import com.example.hotelmanager.Cliente;
+package com.example.hotelmanager.domain.entity;
 
 import java.time.LocalDate;
 

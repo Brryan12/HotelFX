@@ -1,4 +1,4 @@
-package com.example.hotelmanager;
+package com.example.hotelmanager.domain.entity;
 //3 clases corazon
 //cosas que no sean utiles del core de la aplicacion pueden ir en clases miselaneas
 

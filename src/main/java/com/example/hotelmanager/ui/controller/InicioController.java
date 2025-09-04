@@ -1,8 +1,9 @@
-package com.example.hotelmanager;
+package com.example.hotelmanager.ui.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
+import com.example.hotelmanager.domain.entity.Cliente;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
