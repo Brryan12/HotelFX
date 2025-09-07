@@ -46,7 +46,7 @@ public class LoginController {
                 btnSalir.setVisible(true);
                 if (usuario.equals("admin") && contrasena.equals("1234")) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("inicio-view.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hotelmanager/inicio-view.fxml"));
                         Parent root = loader.load();
                         Stage stage = (Stage) txtUser.getScene().getWindow();
                         stage.setScene(new Scene(root));

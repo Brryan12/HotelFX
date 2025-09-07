@@ -16,17 +16,15 @@ public class ClienteMapper {
         cli.setFechaNacimiento(c.getFechaNacimiento());
         return cli;
     }
-    public static Cliente toModel(ClienteEntity c) {
-        if(c == null) {
+    public static Cliente toModel(ClienteEntity clienteEntity) {
+        if(clienteEntity == null){
             return null;
         }
-        Cliente cli = new Cliente(/*completar*/);
-//        cli.setId(c.getId());
-//        cli.setNombre(c.getNombre());
-//        cli.setPrimerApellido(c.getPrimerApellido());
-//        cli.setSegundoApellido(c.getSegundoApellido());
-//        cli.setIdentificacion(c.getIdentificacion());
-//        cli.setFechaNacimiento(c.getFechaNacimiento());
-        return cli;
+
+        return new Cliente(clienteEntity.getNombre(),
+                0,
+                clienteEntity.getFechaNacimiento(),
+                clienteEntity.getPrimerApellido(),
+                clienteEntity.getIdentificacion());
     }
 }

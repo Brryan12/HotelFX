@@ -62,7 +62,8 @@ public class InicioController implements Initializable{
     private void agregarCliente() {
         Cliente nuevo = mostrarFormulario(null, false);
         if(nuevo != null) {
-            nuevo.setId(listaClientes.getLast().getId() + 1);
+            int nextId = listaClientes.isEmpty() ? 1 : listaClientes.getLast().getId() + 1;
+            nuevo.setId(nextId);
 
             // Verificamos que el cliente no se repita
             for (Cliente cliente : listaClientes) {
@@ -79,7 +80,7 @@ public class InicioController implements Initializable{
 
     private Cliente mostrarFormulario(Cliente cliente, boolean editar) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("formulario-cliente-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hotelmanager/formulario-cliente-view.fxml"));
             Parent root = loader.load();
 
             //LLamar a la clase de FormularioClienteController
