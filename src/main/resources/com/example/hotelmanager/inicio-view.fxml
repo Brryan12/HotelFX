@@ -28,14 +28,14 @@
                                     <TableColumn id="colNombreCli" fx:id="colNombreCli" prefWidth="149.0" text="Nombre" />
                                  </columns>
                               </TableView>
-                              <Button id="btnModificarCli" fx:id="btnModificarCli" layoutX="483.0" layoutY="281.0" mnemonicParsing="false" text="Modificar" />
+                              <Button id="btnModificarCli" fx:id="btnModificarCli" layoutX="483.0" layoutY="281.0" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar" />
                               <Button id="btnAgregarCli" fx:id="btnAgregarCli" layoutX="426.0" layoutY="256.0" mnemonicParsing="false" onAction="#agregarCliente" prefHeight="25.0" prefWidth="67.0" text="Agregar" />
-                              <Button id="btnEliminarCli" fx:id="btnEliminarCli" layoutX="366.0" layoutY="281.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="68.0" text="Eliminar" />
+                              <Button id="btnEliminarCli" fx:id="btnEliminarCli" layoutX="366.0" layoutY="281.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="22.0" prefWidth="68.0" text="Eliminar" />
                               <TextField id="txtBuscarCli" fx:id="txtBuscarCli" layoutX="14.0" layoutY="14.0" prefHeight="19.0" prefWidth="246.0" />
-                              <Button id="btnBuscarCli" fx:id="btnBuscarCli" layoutX="282.0" layoutY="14.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="68.0" text="Buscar" />
-                              <TextField id="txtBuscarCli" layoutX="369.0" layoutY="49.0" prefHeight="17.0" prefWidth="180.0" />
-                              <TextField id="txtBuscarCli" fx:id="txtBuscarCli111" layoutX="359.0" layoutY="100.0" prefHeight="17.0" prefWidth="180.0" />
-                              <TextField id="txtBuscarCli" fx:id="txtBuscarCli1111" layoutX="369.0" layoutY="142.0" prefHeight="17.0" prefWidth="180.0" />
+                              <Button id="btnBuscarCli" fx:id="btnBuscarCli" layoutX="282.0" layoutY="14.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="22.0" prefWidth="68.0" text="Buscar" />
+                              <TextField id="txtBuscarCli" fx:id="txtIdentificacionCli" layoutX="369.0" layoutY="49.0" prefHeight="17.0" prefWidth="180.0" />
+                              <TextField id="txtBuscarCli" fx:id="txtNombreCli" layoutX="359.0" layoutY="100.0" prefHeight="17.0" prefWidth="180.0" />
+                              <TextField id="txtBuscarCli" fx:id="txtApellidoCli" layoutX="369.0" layoutY="142.0" prefHeight="17.0" prefWidth="180.0" />
                               <Label layoutX="449.0" layoutY="31.0" text="Id" />
                               <Label layoutX="433.0" layoutY="83.0" text="nombre" />
                               <Label layoutX="438.0" layoutY="125.0" text="apellido" />
