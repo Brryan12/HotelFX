@@ -22,7 +22,7 @@ public class ClienteDatos {
     public ClienteDatos(String filePath) {
         try {
             this.xmlPath = Paths.get(Objects.requireNonNull(filePath));
-            this.ctx = JAXBContext.newInstance(ClienteEntity.class, ClienteEntity.class);
+            this.ctx = JAXBContext.newInstance(ClienteConector.class, ClienteEntity.class);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
