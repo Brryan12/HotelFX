@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="300" prefWidth="400" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hotelmanager.FormularioCliController">
+<BorderPane prefHeight="300" prefWidth="400" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hotelmanager.controller.FormularioCliController">
 
     <center>
         <VBox alignment="CENTER" spacing="10">

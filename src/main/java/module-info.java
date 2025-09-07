@@ -6,4 +6,8 @@ module com.example.hotelmanager {
 
     opens com.example.hotelmanager to javafx.fxml;
     exports com.example.hotelmanager;
+    exports com.example.hotelmanager.model;
+    opens com.example.hotelmanager.model to javafx.fxml;
+    exports com.example.hotelmanager.controller;
+    opens com.example.hotelmanager.controller to javafx.fxml;
 }

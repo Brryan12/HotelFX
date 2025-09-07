@@ -1,4 +1,4 @@
-package com.example.hotelmanager;
+package com.example.hotelmanager.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
