@@ -1,4 +1,4 @@
-package org.example.hotelgui.datos;
+package com.example.hotelmanager.datos;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;

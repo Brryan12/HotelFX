@@ -1,9 +1,9 @@
-package com.example.hotelmanager.ui.controller;
+package com.example.hotelmanager.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
-import com.example.hotelmanager.domain.entity.Cliente;
+import com.example.hotelmanager.model.Cliente;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

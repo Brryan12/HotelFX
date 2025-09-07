@@ -1,4 +1,4 @@
-package com.example.hotelmanager.domain.entity;
+package com.example.hotelmanager.model;
 
 public abstract class Trabajador {
     protected String nombre;

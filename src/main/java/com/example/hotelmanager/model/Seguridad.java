@@ -1,16 +1,17 @@
-package com.example.hotelmanager.domain.entity;
+package com.example.hotelmanager.model;
 
-public class Limpieza extends Trabajador {
+public class Seguridad extends Trabajador {
     private String turno;
     private String area;
-    private String bitacora;
 
-    public Limpieza() {
+    public Seguridad() {
         super();
     }
 
-    public Limpieza(String nombre, String primerApellido, int id, String cedula, String puesto) {
+    public Seguridad(String nombre, String primerApellido, int id, String cedula, String puesto, String turno, String area) {
         super(nombre, primerApellido, id, cedula, puesto);
+        this.turno = turno;
+        this.area = area;
     }
 
     public String getTurno() {
@@ -27,13 +28,5 @@ public class Limpieza extends Trabajador {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public String getBitacora() {
-        return bitacora;
-    }
-
-    public void setBitacora(String bitacora) {
-        this.bitacora = bitacora;
     }
 }

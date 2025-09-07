@@ -1,15 +1,15 @@
-package com.example.hotelmanager.domain.entity;
+package com.example.hotelmanager.model;
 
-public class Personal extends  Trabajador{
+public class Limpieza extends Trabajador {
     private String turno;
     private String area;
     private String bitacora;
 
-    public Personal() {
+    public Limpieza() {
         super();
     }
 
-    public Personal(String nombre, String primerApellido, int id, String cedula, String puesto) {
+    public Limpieza(String nombre, String primerApellido, int id, String cedula, String puesto) {
         super(nombre, primerApellido, id, cedula, puesto);
     }
 

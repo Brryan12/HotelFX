@@ -1,11 +1,11 @@
-package com.example.hotelmanager.ui.controller;
+package com.example.hotelmanager.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
-import com.example.hotelmanager.domain.entity.Cliente;
+import com.example.hotelmanager.model.Cliente;
 
 import java.time.LocalDate;
 
