@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import com.example.hotelmanager.logica.ClienteLogica;
 
 public class InicioController implements Initializable{
 
@@ -33,6 +34,10 @@ public class InicioController implements Initializable{
 
     /*Almacenamiento de datos*/
     private final ObservableList<Cliente> listaClientes = FXCollections.observableArrayList(); //lista que se actualiza atm
+    private static final String RUTA__CLIENTES = java.nio.file.Paths.
+            get(System.getProperty("user.dir"), "bd", "clientes.xml").toString();
+    private final ClienteLogica clienteLogica = new ClienteLogica(RUTA__CLIENTES);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colIdCli.setCellValueFactory(cd ->
@@ -49,11 +54,7 @@ public class InicioController implements Initializable{
                 )
         );
 
-        listaClientes.addAll(
-                new Cliente("Juan",2, LocalDate.of(1991,12,15),"Ricardo","1234"),
-                new Cliente("Fatima",1, LocalDate.of(2000,8,25),"Santa","7894"),
-                new Cliente("Carlos",3, LocalDate.of(2005,12,14),"Mata","7854")
-        );
+        listaClientes.addAll(clienteLogica.findAll());
 
         tblClientes.setItems(listaClientes);
     }
@@ -74,7 +75,13 @@ public class InicioController implements Initializable{
                 }
             }
 
-            listaClientes.add(nuevo);
+            /*
+            Cliente resultado = clienteLogica.create(nuevo); //primero a la bd
+            listaClientes.add(resultado); //luego se carga a la memoria
+            */
+
+            clienteLogica.create(nuevo); //primero a la bd
+            listaClientes.add(nuevo); //luego se carga a la memoria
         }
     }
 
@@ -114,6 +121,7 @@ public class InicioController implements Initializable{
 
         Cliente modificado = mostrarFormulario(seleccionado, true);
         if (modificado != null) {
+            clienteLogica.update(modificado);
             tblClientes.refresh();
         }
     }
@@ -126,7 +134,7 @@ public class InicioController implements Initializable{
                 mostrarAlerta("Seleccione un cliente", "Por favor, seleccione un cliente de la tabla para eliminar.");
                 return;
             }
-
+            clienteLogica.deleteById(seleccionado.getId());
             listaClientes.remove(seleccionado);
         }
         catch (Exception error)
@@ -144,7 +152,7 @@ public class InicioController implements Initializable{
                 tblClientes.setItems(listaClientes);
                 return;
             }
-
+            /* si se actualiza la lista mientras se busca no sale
             ObservableList<Cliente> filtrados =
                     FXCollections.observableArrayList(
                             listaClientes.stream()
@@ -153,8 +161,10 @@ public class InicioController implements Initializable{
                                             || c.getPrimerApellido().toLowerCase().contains(criterio))
                                     .collect(Collectors.toList())
                     );
+            */
+            listaClientes.addAll(clienteLogica.findByParameters(criterio));
 
-            tblClientes.setItems(filtrados);
+            tblClientes.setItems(listaClientes);
         }
         catch (Exception error)
         {
