@@ -63,17 +63,7 @@ public class InicioController implements Initializable{
     private void agregarCliente() {
         Cliente nuevo = mostrarFormulario(null, false);
         if(nuevo != null) {
-            int nextId = listaClientes.isEmpty() ? 1 : listaClientes.getLast().getId() + 1;
-            nuevo.setId(nextId);
 
-            // Verificamos que el cliente no se repita
-            for (Cliente cliente : listaClientes) {
-                if (cliente.getIdentificacion().equals(nuevo.getIdentificacion())) {
-                    // Error de identificación repetida
-                    mostrarAlerta("Cliente ya existe", "El cliente con la identificación " + nuevo.getIdentificacion() + " ya existe.");
-                    return;
-                }
-            }
 
             /*
             Cliente resultado = clienteLogica.create(nuevo); //primero a la bd
